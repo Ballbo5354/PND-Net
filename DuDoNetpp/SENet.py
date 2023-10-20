@@ -8,7 +8,7 @@ from glob import glob
 import numpy as np
 from dudonet_model.IENet import down, up, double_conv
 
-def SinoPadding(Sino, size=420, dim=2):
+def SinoPadding(Sino, size=620, dim=2):
     lenth = (size - Sino.size()[dim]) // 2
     CatData = Sino[:, :, 0:lenth, :] if dim==2 else Sino[:, 0:lenth, :]
     Result = torch.cat((Sino, CatData), dim=dim)
@@ -17,7 +17,7 @@ def SinoPadding(Sino, size=420, dim=2):
     return Result
 
 def GetOrigSino(Sino, dim=2):
-    return Sino[:, :, 10:10+400, :] if dim==2 else Sino[:, 10:10+400, :]
+    return Sino[:, :, 10:10+600, :] if dim==2 else Sino[:, 10:10+600, :]
 
 # take place the pooling layer by convolution
 class PoolingLayer(nn.Module):
