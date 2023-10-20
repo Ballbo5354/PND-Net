@@ -71,51 +71,6 @@ class DecomposeNet(nn.Module):
         Art_i = Isc - Imc
         return Ssc, Art_s, Isc, Imc, Art_i
 
-class DecomposeNet_SimpleSNet(nn.Module):
-    def __init__(self, opt):
-        super(DecomposeNet_SimpleSNet, self).__init__()
-        self.FP = FP
-        self.FBP = FBP
-        self.imPixScale = opt.imPixScale
-        self.opt = opt
-        self.SNet = NSD_NetSimple()
-        self.INet = ResUnet_L3(channel=1, filters=[64,128,256,512])
-        self.tiny_beta = 0.001
-
-    def getminmax(self):
-        return self.opt.dataMin, self.opt.dataMax
-
-    def normalize(self, img):
-        minval, mxaval = self.getminmax()
-        torch.clamp(img,minval,mxaval, out=None)
-        img = (img-minval)/(mxaval-minval)
-        img = img*2.0-1.0
-        return img
-
-    def Renormalize(self, img):
-        minval, mxaval = self.getminmax()
-        img = img*0.5 + 0.5
-        img = img*(mxaval-minval)+minval
-        return img
-
-    def forward2(self,Xc):
-        X_cc = self.INet(self.normalize(Xc))
-        Xcc = self.Renormalize(X_cc)
-        return Xcc
-
-    def forward(self,Sm, Mask):
-        Mp = self.FP(Mask).mul(self.imPixScale)
-        # add a tiny value as weight for non-local artifacts
-        Mp = Mp + self.tiny_beta
-
-        Ssc, Art_s = self.SNet(Sm, Mp)
-        Isc = self.FBP(Ssc).div(self.imPixScale)
-
-        #  need to normalize the data before network propagation
-        Imc = self.INet(self.normalize(Isc))
-        Imc = self.Renormalize(Imc)
-        Art_i = Isc - Imc
-        return Ssc, Art_s, Isc, Imc, Art_i
 
 
 """
