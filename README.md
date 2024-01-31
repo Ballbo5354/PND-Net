@@ -10,5 +10,6 @@ first commit for base network for PND-Net
 update the code of PND-Net and some SOTA method
 
 Paper citation:
-PND-Net: Physics based Non-local Dual-domain Network for Metal Artifact Reduction. 
-Xia, Jinqiu & Zhou, Yiwen & Wang, Hailong & Deng, Wenxin & Kang, Jing & Wu, Wangjiang & Qi, Mengke & Zhou, Ling Hong & Ma, Jianhui & xu, Yuan. (2023). 
+J. Xia et al., "PND-Net: Physics-inspired Non-local Dual-domain Network for Metal Artifact Reduction," in IEEE Transactions on Medical Imaging, doi: 10.1109/TMI.2024.3354925.
+keywords: {Metals;Computed tomography;Implants;Image restoration;Photonics;Phantoms;Image reconstruction;Metal artifact reduction;Non-local dual-domain network;Unpaired learning},
+
